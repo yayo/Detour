@@ -1,0 +1,18 @@
+{"version":"0.0.0.1",
+ "name":"Detour",
+ "description":"绕道回家，在花费与快捷间寻求平衡。",
+ "manifest_version":2,
+ "app":
+  {"launch":
+    {"local_path":"Detour.html"
+    }
+  },
+ "icons":
+  {"16":"Detour.png",
+   "128":"Detour.png"
+  },
+ "background":
+  {"scripts":["background.js"]
+  },
+ "permissions":["cookies","http://www.qunar.com/","http://flight.qunar.com/"]
+}

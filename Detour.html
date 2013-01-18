@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Detour</title>
+<style type="text/css">
+textarea{width:99%;}
+input{width:99%;}
+progress{width:100%;}
+</style>
+<script type="text/javascript" src="background.js"></script>
+</head>
+<body>
+
+<ul>
+<li>第一次运行或直接访问qunar.com后，请先清除Cookie，否则将被出验证码。</li>
+<li>
+<ol>
+<li>设：机场列表为C，出发首选为D1，出发可选为D0，到达首选为A1，到达可选为A0。</li>
+<li>满足：<ol>
+<li>C⊊D1 且 C⊊D0 且 C⊊A1 且 C⊊A0</li>
+<li>D1∩D0=∅ 且 D1∩A1=∅ 且 D1∩A0=∅ 且 D0∩A1=∅ 且 D0∩A0=∅ 且 A1∩A0=∅</li>
+</ol></li>
+<li>求：D1×C ∪ D0×(A1∪A0) ∪ C×A1 ∪ (D1∪D0)×A0</li>
+</ol>
+</li>
+<li>中转机场：如果首选出发与首选达到明确，则可对一周内各天多次查询，取中转机场并集，将此并集代换为全部换机场列表，以减少查询量增加速度。</li>
+<li><ol>
+<li>直飞：(D1∪D0)×(A1∪A0)</li>
+<li>（比直飞便宜的）中转：(D1×C×A1 &lt; D1×A1) ∪ (D0×(A1∪A0)×A1 &lt; D0×A1) ∪ (D1×(D1∪D0)×A0 &lt; D1×A0) </li>
+<li>详细</li>
+</ol></li>
+</ul>
+<form id="input" action="">
+<table border="1" width="100%">
+<tr><th colspan="4"><b id="airports0_n"></b>机场</th></tr>
+<!--
+178
+"WXN":"万州","SYX":"三亚","PVG":"上海","SHA":"上海","IQM":"且末","DOY":"东营","ZHY":"中卫","LYI":"临沂","LNJ":"临沧","DDG":"丹东","LJG":"丽江","YIW":"义乌","HLH":"乌兰浩特","WUA":"乌海","URC":"乌鲁木齐","JIU":"九江","ERL":"二连浩特","JGS":"井冈山","YIN":"伊宁","LDS":"伊春","FUO":"佛山","JMU":"佳木斯","BSD":"保山","KRY":"克拉玛依","LHW":"兰州","ACX":"兴义","BAV":"包头","NAY":"北京","PEK":"北京","BHY":"北海","NKG":"南京","NAO":"南充","NNG":"南宁","KHN":"南昌","NTG":"南通","NNY":"南阳","BPL":"博乐","XMN":"厦门","HYN":"台州","HFE":"合肥","TLQ":"吐鲁番","HET":"呼和浩特","HTN":"和田","HMI":"哈密","HRB":"哈尔滨","TVS":"唐山","KHG":"喀什","KJI":"喀纳斯","JGN":"嘉峪关","GYU":"固原","TCG":"塔城","DAT":"大同","DQA":"大庆","DLU":"大理","DLC":"大连","THQ":"天水","TSN":"天津","TYN":"太原","WEH":"威海","NGB":"宁波","AQG":"安庆","AVA":"安顺","YBP":"宜宾","YIH":"宜昌","RLK":"巴彦淖尔","CZX":"常州","CGD":"常德","GYS":"广元","CAN":"广州","KRL":"库尔勒","KCA":"库车","KGT":"康定","YNJ":"延吉","ENY":"延安","DYG":"张家界","YZY":"张掖","XUZ":"徐州","SYM":"思茅","ENH":"恩施","CTU":"成都","LXA":"拉萨","PZI":"攀枝花","DNH":"敦煌","WNH":"文山","WUX":"无锡","RKZ":"日喀则","KMG":"昆明","BPX":"昌都","ZAT":"昭通","JJN":"晋江","JDZ":"景德镇","CHG":"朝阳","HGH":"杭州","LZY":"林芝","LZH":"柳州","GOQ":"格尔木","KWL":"桂林","MXZ":"梅县","WUZ":"梧州","UYN":"榆林","WUS":"武夷山","WUH":"武汉","LLF":"永州","HZG":"汉中","SWA":"汕头","SHE":"沈阳","LZO":"泸州","LYA":"洛阳","TNA":"济南","JNG":"济宁","HAK":"海口","HLD":"海拉尔","HIA":"淮安","SZX":"深圳","WNZ":"温州","ZHA":"湛江","NZH":"满洲里","OHE":"漠河","WEF":"潍坊","YNT":"烟台","MDG":"牡丹江","YUS":"玉树","ZUH":"珠海","AEB":"百色","YNZ":"盐城","SJW":"石家庄","FOC":"福州","SHP":"秦皇岛","MIG":"绵阳","TCZ":"腾冲","HSN":"舟山","LUM":"芒市","HJJ":"芷江","LLB":"荔波","JUZ":"衢州","XFN":"襄阳(中国)","JHG":"西双版纳","XNN":"西宁","XIY":"西安","XIC":"西昌","KWE":"贵阳","KOW":"赣州","CIF":"赤峰","DAX":"达州","YCU":"运城","LYG":"连云港","LCX":"连城","TGO":"通辽","NLT":"那拉提","HDG":"邯郸","CGO":"郑州","DSN":"鄂尔多斯","CKG":"重庆","JIC":"金昌","TEN":"铜仁","INC":"银川","XIL":"锡林浩特","JNZ":"锦州","CGQ":"长春","CSX":"长沙","CIH":"长治","CNI":"长海","NBS":"长白山","FUG":"阜阳","AKU":"阿克苏","AAT":"阿勒泰","YIE":"阿尔山","NGQ":"阿里","TAO":"青岛","AOG":"鞍山","DIG":"香格里拉","JXA":"鸡西","TXN":"黄山","JZH":"黄龙","HZH":"黎平","HEK":"黑河","JIQ":"黔江","NDG":"齐齐哈尔",
+[北京,南宁]=46
+"SYX":"三亚","PVG":"上海","SHA":"上海","URC":"乌鲁木齐","LHW":"兰州","BAV":"包头","NAY":"北京","PEK":"北京","NKG":"南京","NNG":"南宁","KHN":"南昌","XMN":"厦门","HFE":"合肥","HET":"呼和浩特","HRB":"哈尔滨","DLC":"大连","TSN":"天津","TYN":"太原","CAN":"广州","CTU":"成都","KMG":"昆明","JJN":"晋江","HGH":"杭州","KWL":"桂林","WUZ":"梧州","WUH":"武汉","SWA":"汕头","SHE":"沈阳","TNA":"济南","HAK":"海口","HIA":"淮安","SZX":"深圳","WNZ":"温州","ZUH":"珠海","SJW":"石家庄","FOC":"福州","XIY":"西安","KWE":"贵阳","KOW":"赣州","CGO":"郑州","DSN":"鄂尔多斯","CKG":"重庆","INC":"银川","CGQ":"长春","CSX":"长沙","TAO":"青岛",
+[北京,西安]=71
+"WXN":"万州","SYX":"三亚","PVG":"上海","SHA":"上海","ZHY":"中卫","LYI":"临沂","LJG":"丽江","WUA":"乌海","URC":"乌鲁木齐","JGS":"井冈山","FUO":"佛山","LHW":"兰州","BAV":"包头","NAY":"北京","PEK":"北京","BHY":"北海","NKG":"南京","NNG":"南宁","KHN":"南昌","XMN":"厦门","HFE":"合肥","HET":"呼和浩特","HRB":"哈尔滨","JGN":"嘉峪关","DAT":"大同","DQA":"大庆","DLC":"大连","TSN":"天津","TYN":"太原","NGB":"宁波","YIH":"宜昌","RLK":"巴彦淖尔","CZX":"常州","CAN":"广州","ENY":"延安","CTU":"成都","LXA":"拉萨","WUX":"无锡","KMG":"昆明","HGH":"杭州","LZH":"柳州","KWL":"桂林","UYN":"榆林","WUH":"武汉","SWA":"汕头","SHE":"沈阳","TNA":"济南","JNG":"济宁","HAK":"海口","HIA":"淮安","SZX":"深圳","WNZ":"温州","YNT":"烟台","ZUH":"珠海","SJW":"石家庄","FOC":"福州","MIG":"绵阳","XFN":"襄阳(中国)","XNN":"西宁","XIY":"西安","KWE":"贵阳","CGO":"郑州","DSN":"鄂尔多斯","CKG":"重庆","INC":"银川","XIL":"锡林浩特","CGQ":"长春","CSX":"长沙","FUG":"阜阳","TAO":"青岛","TXN":"黄山",
+Test_Sample=13
+"PVG":"上海","SHA":"上海","NAY":"北京","PEK":"北京","NNG":"南宁","TSN":"天津","TYN":"太原","CAN":"广州","CTU":"成都","KWL":"桂林","WUZ":"梧州","TNA":"济南","SJW":"石家庄",
+-->
+<tr><td colspan="4" align="center"><textarea id="airports0" rows="0" cols="0">
+"WXN":"万州","SYX":"三亚","PVG":"上海","SHA":"上海","IQM":"且末","DOY":"东营","ZHY":"中卫","LYI":"临沂","LNJ":"临沧","DDG":"丹东","LJG":"丽江","YIW":"义乌","HLH":"乌兰浩特","WUA":"乌海","URC":"乌鲁木齐","JIU":"九江","ERL":"二连浩特","JGS":"井冈山","YIN":"伊宁","LDS":"伊春","FUO":"佛山","JMU":"佳木斯","BSD":"保山","KRY":"克拉玛依","LHW":"兰州","ACX":"兴义","BAV":"包头","NAY":"北京","PEK":"北京","BHY":"北海","NKG":"南京","NAO":"南充","NNG":"南宁","KHN":"南昌","NTG":"南通","NNY":"南阳","BPL":"博乐","XMN":"厦门","HYN":"台州","HFE":"合肥","TLQ":"吐鲁番","HET":"呼和浩特","HTN":"和田","HMI":"哈密","HRB":"哈尔滨","TVS":"唐山","KHG":"喀什","KJI":"喀纳斯","JGN":"嘉峪关","GYU":"固原","TCG":"塔城","DAT":"大同","DQA":"大庆","DLU":"大理","DLC":"大连","THQ":"天水","TSN":"天津","TYN":"太原","WEH":"威海","NGB":"宁波","AQG":"安庆","AVA":"安顺","YBP":"宜宾","YIH":"宜昌","RLK":"巴彦淖尔","CZX":"常州","CGD":"常德","GYS":"广元","CAN":"广州","KRL":"库尔勒","KCA":"库车","KGT":"康定","YNJ":"延吉","ENY":"延安","DYG":"张家界","YZY":"张掖","XUZ":"徐州","SYM":"思茅","ENH":"恩施","CTU":"成都","LXA":"拉萨","PZI":"攀枝花","DNH":"敦煌","WNH":"文山","WUX":"无锡","RKZ":"日喀则","KMG":"昆明","BPX":"昌都","ZAT":"昭通","JJN":"晋江","JDZ":"景德镇","CHG":"朝阳","HGH":"杭州","LZY":"林芝","LZH":"柳州","GOQ":"格尔木","KWL":"桂林","MXZ":"梅县","WUZ":"梧州","UYN":"榆林","WUS":"武夷山","WUH":"武汉","LLF":"永州","HZG":"汉中","SWA":"汕头","SHE":"沈阳","LZO":"泸州","LYA":"洛阳","TNA":"济南","JNG":"济宁","HAK":"海口","HLD":"海拉尔","HIA":"淮安","SZX":"深圳","WNZ":"温州","ZHA":"湛江","NZH":"满洲里","OHE":"漠河","WEF":"潍坊","YNT":"烟台","MDG":"牡丹江","YUS":"玉树","ZUH":"珠海","AEB":"百色","YNZ":"盐城","SJW":"石家庄","FOC":"福州","SHP":"秦皇岛","MIG":"绵阳","TCZ":"腾冲","HSN":"舟山","LUM":"芒市","HJJ":"芷江","LLB":"荔波","JUZ":"衢州","XFN":"襄阳(中国)","JHG":"西双版纳","XNN":"西宁","XIY":"西安","XIC":"西昌","KWE":"贵阳","KOW":"赣州","CIF":"赤峰","DAX":"达州","YCU":"运城","LYG":"连云港","LCX":"连城","TGO":"通辽","NLT":"那拉提","HDG":"邯郸","CGO":"郑州","DSN":"鄂尔多斯","CKG":"重庆","JIC":"金昌","TEN":"铜仁","INC":"银川","XIL":"锡林浩特","JNZ":"锦州","CGQ":"长春","CSX":"长沙","CIH":"长治","CNI":"长海","NBS":"长白山","FUG":"阜阳","AKU":"阿克苏","AAT":"阿勒泰","YIE":"阿尔山","NGQ":"阿里","TAO":"青岛","AOG":"鞍山","DIG":"香格里拉","JXA":"鸡西","TXN":"黄山","JZH":"黄龙","HZH":"黎平","HEK":"黑河","JIQ":"黔江","NDG":"齐齐哈尔",
+</textarea></td></tr>
+<tr><td rowspan="2">行程</td><td>起始</td><td colspan="2"><input id="t0" type="date" value="2013-04-05" /></td></tr>
+<tr><td>终止</td><td colspan="2"></td></tr>
+<tr><td rowspan="2">出发</td><td>首选</td><td><input id="d1" type="text" value="北京 天津" /></td><td rowspan="4"><input id="swap" type="button" value="返程" /></td></tr>
+<tr><td>可选</td><td><input id="d0" type="text" value="石家庄 济南 太原" /></td></tr>
+<tr><td rowspan="2">到达</td><td>首选</td><td><input id="a1" type="text" value="南宁 桂林" /></td></tr>
+<tr><td>可选</td><td><input id="a0" type="text" value="广州 梧州" /></td></tr>
+<tr><th colspan="4"><b id="airports1_n"></b>已知中转机场</th></tr>
+<tr><td colspan="4" align="center"><textarea id="airports1" rows="0" cols="0"></textarea></td></tr>
+<tr><td colspan="4" align="center"><input id="search" type="button" value="检索" disabled="disabled"><progress id="progress" value="0" max="0"></progress></input></td></tr>
+<tr><th colspan="4"><b id="airports2_n"></b>新增中转机场</th></tr>
+<tr><td colspan="4" align="center"><textarea id="airports2" rows="0" cols="0" disabled="disabled"></textarea></td></tr>
+</table>
+</form>
+<div id="show"></div>
+</body>
+</html>
