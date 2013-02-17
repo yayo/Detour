@@ -10,14 +10,18 @@ function fare(citys,t,d,a,fares)
   http1=new XMLHttpRequest();
   http1.onreadystatechange=function()
    {if(http1.readyState==4)
-     {if(http1.status==200)
+     {if(http1.status!=200)
+       postError("http1.status=="+http1.status+"!=200");
+      else
        {http2=new XMLHttpRequest();
         http2.onreadystatechange=function()
          {if(http2.readyState==4)
-           {if(http2.status==200)
+           {if(http2.status!=200)
+             postError("http2.status=="+http2.status+"!=200");
+            else
              {if("{isLimit:true}"==http2.responseText)
                {postError("CAPTCHA");
-                fare(t,d,a);
+                /*fare(t,d,a);*/
                }
               else
                {if(http2.responseText[0]!='(' || http2.responseText[http2.responseText.length-1]!=')')
@@ -75,12 +79,20 @@ function fare(citys,t,d,a,fares)
            }
          }
         http2.open("GET","http://flight.qunar.com/twell/longwell?searchType=OneWayFlight&http%3A%2F%2Fwww.travelco.com%2FsearchDepartureTime="+t+"&http%3A%2F%2Fwww.travelco.com%2FsearchDepartureAirport="+encodeURIComponent(d)+"&http%3A%2F%2Fwww.travelco.com%2FsearchArrivalAirport="+encodeURIComponent(a),false);
-        http2.send(null);
+        try
+         {http2.send(null);}
+        catch(e)
+         {postError("Connection2 Error: "+e);
+         }
        }
      }
    };
   http1.open("GET","http://flight.qunar.com/twell/images/Lw_AdsDotLine.gif?"+(new Date()).getTime(),false);
-  http1.send(null);
+  try
+   {http1.send(null);}
+  catch(e)
+   {postError("Connection1 Error: "+e);
+   }
  }
  
  onmessage=function(e)
