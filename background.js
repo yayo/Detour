@@ -297,6 +297,9 @@ function search()
          input.search.value="检索";
          input.search.disabled=false;
          break;
+        case -1:
+         alert(e.data[1]);
+         return;
         default:
          throw("Unknown Command: "+e.data[0]);
         }

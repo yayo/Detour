@@ -1,3 +1,10 @@
+var E;
+
+function postError(e)
+ {E=true;
+  postMessage([-1,e]);
+ }
+
 function fare(citys,t,d,a,fares)
  {postMessage([1,(new Date).getTime()]);
   http1=new XMLHttpRequest();
@@ -9,42 +16,42 @@ function fare(citys,t,d,a,fares)
          {if(http2.readyState==4)
            {if(http2.status==200)
              {if("{isLimit:true}"==http2.responseText)
-               {throw("CAPTCHA");
+               {postError("CAPTCHA");
                 fare(t,d,a);
                }
               else
                {if(http2.responseText[0]!='(' || http2.responseText[http2.responseText.length-1]!=')')
-                 throw("Unknown responseText: "+http2.responseText);
+                 postError("Unknown responseText: "+http2.responseText);
                 else
                  {var r=JSON.parse(http2.responseText.slice(1,-1));
                   if("[]"!=r.errorInfo)
                    {if("[INVALID_AIRLINE]"!=r.errorInfo)
-                     throw(t+' '+d+' '+a+" ServerError: "+r.errorInfo);
+                     postError(t+' '+d+' '+a+" ServerError: "+r.errorInfo);
                    }
                   else
                    {for(k in r.oneway_data.priceInfo)
                      {if(undefined===r.oneway_data.flightInfo[k])
-                       throw("flightInfo NOT found: "+k);
+                       postError("flightInfo NOT found: "+k);
                       else
                        {var e=k.split("|");
                         if(2!=e.length)
-                         throw("2!=split(\"|\").length : "+k);
+                         postError("2!=split(\"|\").length : "+k);
                         else
                          {if(e[1]!=t)
-                           throw("Date NOT uniform: "+t+" <> "+e[1]);
+                           postError("Date NOT uniform: "+t+" <> "+e[1]);
                           else
                            e=e[0];
                           if(r.oneway_data.flightInfo[k].dd!=t)
-                           throw("dd NOT uniform: "+t+" <> "+r.oneway_data.flightInfo[k].dd);
+                           postError("dd NOT uniform: "+t+" <> "+r.oneway_data.flightInfo[k].dd);
                           else
                            {if(r.oneway_data.flightInfo[k].co!=e)
-                             throw("co NOT identical: "+e+" <> "+r.oneway_data.flightInfo[k].co);
+                             postError("co NOT identical: "+e+" <> "+r.oneway_data.flightInfo[k].co);
                             else
                              {if(undefined===citys[d][r.oneway_data.flightInfo[k].da])
-                               throw("Unknown Departure "+d+" AirPort: "+r.oneway_data.flightInfo[k].da);
+                               postError("Unknown Departure "+d+" AirPort: "+r.oneway_data.flightInfo[k].da);
                               else
                                {if(undefined===citys[a][r.oneway_data.flightInfo[k].aa])
-                                 throw("Unknown Arrival "+a+" AirPort: "+r.oneway_data.flightInfo[k].aa);
+                                 postError("Unknown Arrival "+a+" AirPort: "+r.oneway_data.flightInfo[k].aa);
                                 else
                                  {if(undefined===fares[t]) fares[t]={};
                                   if(undefined===fares[t][e]) fares[t][e]={};
@@ -52,7 +59,7 @@ function fare(citys,t,d,a,fares)
                                   if(undefined===fares[t][e][r.oneway_data.flightInfo[k].da][r.oneway_data.flightInfo[k].aa])
                                    fares[t][e][r.oneway_data.flightInfo[k].da][r.oneway_data.flightInfo[k].aa]=[r.oneway_data.flightInfo[k].dt,r.oneway_data.flightInfo[k].at,r.oneway_data.priceInfo[k].tlp];
                                   else
-                                   throw("Should Not Queryed: "+t+" "+e+" "+r.oneway_data.flightInfo[k].da+" "+r.oneway_data.flightInfo[k].aa);
+                                   postError("Should Not Queryed: "+t+" "+e+" "+r.oneway_data.flightInfo[k].da+" "+r.oneway_data.flightInfo[k].aa);
                                  }
                                }
                              }
@@ -77,20 +84,21 @@ function fare(citys,t,d,a,fares)
  }
  
  onmessage=function(e)
- {var citys=e.data[0];
+ {E=false;
+  var citys=e.data[0];
   var t=e.data[1];
   var c=e.data[2];
   var fares={};
   var i=0;
   for(k1 in c[0])
    for(k2 in citys)
-    if((1==c[0][k1] && k1!=k2) || (0==c[0][k1] && 0==c[1][k2]))
+    if(false==E && ((1==c[0][k1] && k1!=k2) || (0==c[0][k1] && 0==c[1][k2])))
      {fare(citys,t,k1,k2,fares);
       postMessage([2,++i]);
      }
   for(k1 in citys)
    for(k2 in c[1])
-    if((1==c[1][k2] && k1!=k2 && (undefined===c[0][k1] || 0==c[0][k1])))
+    if(false==E && (1==c[1][k2] && k1!=k2 && (undefined===c[0][k1] || 0==c[0][k1])))
      {fare(citys,t,k1,k2,fares);
       postMessage([2,++i]);
      }
