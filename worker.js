@@ -57,13 +57,17 @@ function fare(citys,t,d,a,fares)
                                {if(undefined===citys[a][r.oneway_data.flightInfo[k].aa])
                                  postError("Unknown Arrival "+a+" AirPort: "+r.oneway_data.flightInfo[k].aa);
                                 else
-                                 {if(undefined===fares[t]) fares[t]={};
-                                  if(undefined===fares[t][e]) fares[t][e]={};
-                                  if(undefined===fares[t][e][r.oneway_data.flightInfo[k].da]) fares[t][e][r.oneway_data.flightInfo[k].da]={};
-                                  if(undefined===fares[t][e][r.oneway_data.flightInfo[k].da][r.oneway_data.flightInfo[k].aa])
-                                   fares[t][e][r.oneway_data.flightInfo[k].da][r.oneway_data.flightInfo[k].aa]=[r.oneway_data.flightInfo[k].dt,r.oneway_data.flightInfo[k].at,r.oneway_data.priceInfo[k].tlp];
+                                 {if(undefined===r.oneway_data.priceInfo[k].lowpr)
+                                   postError("lowpr NOT found: "+k);
                                   else
-                                   postError("Should Not Queryed: "+t+" "+e+" "+r.oneway_data.flightInfo[k].da+" "+r.oneway_data.flightInfo[k].aa);
+                                   {if(undefined===fares[t]) fares[t]={};
+                                    if(undefined===fares[t][e]) fares[t][e]={};
+                                    if(undefined===fares[t][e][r.oneway_data.flightInfo[k].da]) fares[t][e][r.oneway_data.flightInfo[k].da]={};
+                                    if(undefined===fares[t][e][r.oneway_data.flightInfo[k].da][r.oneway_data.flightInfo[k].aa])
+                                     fares[t][e][r.oneway_data.flightInfo[k].da][r.oneway_data.flightInfo[k].aa]=[r.oneway_data.flightInfo[k].dt,r.oneway_data.flightInfo[k].at,r.oneway_data.priceInfo[k].lowpr];
+                                    else
+                                     postError("Should Not Queryed: "+t+" "+e+" "+r.oneway_data.flightInfo[k].da+" "+r.oneway_data.flightInfo[k].aa);
+                                   }
                                  }
                                }
                              }
@@ -78,7 +82,7 @@ function fare(citys,t,d,a,fares)
              }
            }
          }
-        http2.open("GET","http://flight.qunar.com/twell/longwell?searchType=OneWayFlight&http%3A%2F%2Fwww.travelco.com%2FsearchDepartureTime="+t+"&http%3A%2F%2Fwww.travelco.com%2FsearchDepartureAirport="+encodeURIComponent(d)+"&http%3A%2F%2Fwww.travelco.com%2FsearchArrivalAirport="+encodeURIComponent(a),false);
+        http2.open("GET","http://flight.qunar.com/twell/longwell?tags=1&searchType=OneWayFlight&http%3A%2F%2Fwww.travelco.com%2FsearchDepartureTime="+t+"&http%3A%2F%2Fwww.travelco.com%2FsearchDepartureAirport="+encodeURIComponent(d)+"&http%3A%2F%2Fwww.travelco.com%2FsearchArrivalAirport="+encodeURIComponent(a),false);
         try
          {http2.send(null);}
         catch(e)
